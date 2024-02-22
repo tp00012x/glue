@@ -12,6 +12,7 @@ const config = {
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "^src/(.*)": "<rootDir>/src/$1",
   },
   transform: {
     "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "@swc/jest",

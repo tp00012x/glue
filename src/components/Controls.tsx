@@ -1,9 +1,11 @@
-const Controls: React.FC = () => (
+const Controls = () => (
   <>
-    <div className="stats">
-      <div>0 of ?</div>
+    <div className="stats flex items-center justify-center text-blue-100 bg-blue-400 rounded-sm">
+      0 of ?
     </div>
-    <button>Load More</button>
+    <button className="block border border-gray-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-gray-100 rounded-sm">
+      Load More
+    </button>
   </>
 );
 export default Controls;
