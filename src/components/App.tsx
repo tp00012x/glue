@@ -69,7 +69,7 @@ const App: React.FC = () => {
    * The Photo type from the generated GraphQL types can
    * be used as a starting point for the state type:
    */
-  // const [photos, setPhotos] = useState<(Photo | null)[]([]);
+  // const [photos, setPhotos] = useState<(Photo | null)>[]([]);
 
   /**
    * Apollo is a full-featured GraphQL client, providing caching and state management.
