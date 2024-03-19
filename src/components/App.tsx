@@ -3,14 +3,14 @@
  *
  * GraphQL API playground https://graphqlzero.almansi.me/api
  *
- * 1. Load 5 photos from the 1st Album of User with the name that is in the Title component,
- *    after the App component has mounted. Assume the name is unknown until App has mounted.
+ * 1. Load 5 photos from the 1st Album of User with the name that is in the Title component.
+ *    Assume the Title text (name) is dynamic and unknown until App has mounted.
  *    Each photo should be shown with a thumbnail and title. Note: the photos look like
  *    placeholders, that's ok—-this is a free testing API.
- * 2. Get the total count of photos in the 1st Album. We want to display the status of
+ * 2. Clicking the button should fetch an additional 7 photos and append them to the grid.
+ * 3. Display the current count and total count of photos loaded, e.g. 5 of 50.
  *    fetched photos e.g. 5 of 50 - see Controls component.
- * 3. While data is loading, the button in the Controls component should be disabled.
- * 4. Clicking the button fetches an additional 7 photos that get appended to the grid.
+ * 4. The button should be disabled while data is loading and once all 50 are loaded.
  * 5. Bonus: Complete tests in App.test.tsx.
  *
  * NOTES:
@@ -42,10 +42,10 @@ import Thumbnail from "./Thumbnail";
 const GET_USERS_PHOTOS = graphql(`
   # GraphQL query variables are defined using "$var: Type", such as "$user: String"
   # See GraphQL API playground https://graphqlzero.almansi.me/api for schema
-  query GetUsersPhotos {
-    users(options: {}) {
+  query GetUsersPhotos($user: String!) { # ... , $start: Int!, $limit: Int!
+    users(options: { search: { q: $user }}) {
       data {
-        albums {
+        albums(options: { slice: { limit: 1 }}) {
           data {
             photos(options: {}) {
               meta {
