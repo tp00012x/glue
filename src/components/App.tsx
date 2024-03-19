@@ -66,8 +66,14 @@ const App: React.FC = () => {
   console.count("Render"); // for debugging
 
   /**
-   * Apollo is a full-featured GraphQL client that handles caching and state management.
-   * The useLazyQuery hook can be used to fetch data on demand:
+   * The Photo type from the generated GraphQL types can
+   * be used as a starting point for the state type:
+   */
+  // const [photos, setPhotos] = useState<(Photo | null)[]([]);
+
+  /**
+   * Apollo is a full-featured GraphQL client, providing caching and state management.
+   * The useLazyQuery hook can be used to fetch data on demand (one page at a time):
    *   fetchPhotos({ variables: { ... } }).then((result) => {
    */
   // const [fetchPhotos, { data, loading, error }] = useLazyQuery(GET_USERS_PHOTOS);
