@@ -20,6 +20,7 @@
  */
 
 import { graphql } from "src/gql";
+import { Photo } from "src/gql/graphql";
 
 import "./App.css";
 
@@ -42,18 +43,20 @@ import Thumbnail from "./Thumbnail";
 const GET_USERS_PHOTOS = graphql(`
   # GraphQL query variables are defined using "$var: Type", such as "$user: String"
   # See GraphQL API playground https://graphqlzero.almansi.me/api for schema
-  query GetUsersPhotos($user: String!) { # ... , $start: Int!, $limit: Int!
-    users(options: { search: { q: $user }}) {
+  query GetUsersPhotos($user: String!) {
+    users(options: { search: { q: $user } }) {
       data {
-        albums(options: { slice: { limit: 1 }}) {
+        albums(options: { slice: { limit: 1 } }) {
           data {
-            photos(options: {}) {
+            # will need to add $start: Int! and $limit: Int! to the query variables
+            photos(options: { slice: { start: 0, limit: 5 } }) {
               meta {
                 totalCount
               }
-              # data {
-              #   ...
-              # }
+              data {
+                id
+                # ...
+              }
             }
           }
         }
@@ -62,14 +65,14 @@ const GET_USERS_PHOTOS = graphql(`
   }
 `);
 
+/**
+ * The Photo type from the generated GraphQL types can
+ * be used as a starting point for the state type:
+ */
+type MyPhoto = Pick<Photo, "id">;
+
 const App: React.FC = () => {
   console.count("Render"); // for debugging
-
-  /**
-   * The Photo type from the generated GraphQL types can
-   * be used as a starting point for the state type:
-   */
-  // const [photos, setPhotos] = useState<(Photo | null)>[]([]);
 
   /**
    * Apollo is a full-featured GraphQL client, providing caching and state management.
@@ -92,7 +95,7 @@ const App: React.FC = () => {
         data-testid="container"
       >
         <Controls />
-        {/* Render each photo using the Thumbnail component */}
+        {/* Render each photo using the Thumbnail component: */}
         <Thumbnail />
       </div>
     </div>
